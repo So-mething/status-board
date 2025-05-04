@@ -1,0 +1,11 @@
+name = "status-board"
+type = "javascript"
+main = "worker/index.js"
+compatibility_date = "2023-01-01"
+
+account_id = "e5c6bac95ecab37b132d271e5279dea6"  # ← Replace with your actual account ID
+
+[[d1_databases]]
+binding = "DB"
+database_name = "status-board-db"
+database_id = "965e59c8-e906-486c-8857-feafa56259e8"  # ← Replace with your actual D1 DB ID
