@@ -30,14 +30,21 @@ export default {
     if (path === '/api/update' && request.method === 'POST') {
       try {
         const { name, status } = await request.json();
+
+        // Validate inputs
+        if (!name || !status) {
+          return withCors(new Response('Missing name or status', { status: 400 }));
+        }
+
         await env.DB.prepare(
           `INSERT INTO users (name, status, date)
            VALUES (?, ?, CURRENT_DATE)
            ON CONFLICT(name, date) DO UPDATE SET status = excluded.status`
         ).bind(name, status).run();
+
         return withCors(new Response('OK', { status: 200 }));
       } catch (err) {
-        return withCors(new Response('Error updating status', { status: 500 }));
+        return withCors(new Response(`Internal Error: ${err.message}`, { status: 500 }));
       }
     }
 
