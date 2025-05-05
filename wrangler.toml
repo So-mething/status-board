@@ -17,5 +17,3 @@ upload.format = "modules"
 type = "Text"
 globs = ["site/index.html"]
 
-[vars]
-INDEX_HTML = "./site/index.html"
