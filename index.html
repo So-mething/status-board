@@ -2,102 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Status Board</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 2em auto;
-      padding: 1em;
-    }
-    h1 {
-      text-align: center;
-    }
-    form {
-      margin-bottom: 2em;
-    }
-    input, select, button {
-      padding: 0.5em;
-      margin: 0.3em 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .status-list {
-      margin-top: 1em;
-    }
-    .status-item {
-      border-bottom: 1px solid #ccc;
-      padding: 0.5em 0;
-    }
+    body { font-family: sans-serif; padding: 1rem; background: #f5f5f5; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .card { background: white; border-radius: 1rem; padding: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; }
+    .status-online { color: green; }
+    .status-busy { color: goldenrod; }
+    .status-offline { color: gray; }
+    form { margin-bottom: 2rem; }
   </style>
 </head>
 <body>
   <h1>Status Board</h1>
-  
-  <form id="status-form">
-    <label for="name">Name:</label>
-    <input type="text" id="name" required />
-    
-    <label for="status">Status:</label>
-    <select id="status" required>
-      <option value="">Select a status</option>
-      <option value="Online">Online</option>
-      <option value="Away">Away</option>
-      <option value="Busy">Busy</option>
+  <form id="statusForm">
+    <input type="text" name="name" placeholder="Your name" required />
+    <select name="status">
+      <option value="online">Online</option>
+      <option value="busy">Busy</option>
+      <option value="offline">Offline</option>
     </select>
-    
-    <button type="submit">Submit</button>
+    <button type="submit">Update Status</button>
   </form>
-
-  <div class="status-list" id="status-list"></div>
-
+  <div id="statusGrid" class="grid"></div>
   <script>
-    const apiBase = 'https://status-board-app.antonanalt.workers.dev';
-
     async function loadStatuses() {
-      try {
-        const response = await fetch(`${apiBase}/api/status`);
-        const data = await response.json();
-        const container = document.getElementById('status-list');
-        container.innerHTML = '';
-        data.forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'status-item';
-          div.textContent = `${item.name}: ${item.status}`;
-          container.appendChild(div);
-        });
-      } catch (err) {
-        console.error('Failed to load statuses', err);
+      const res = await fetch('https://status-board-app.antonanalt.workers.dev/api/status');
+      const users = await res.json();
+      const grid = document.getElementById('statusGrid');
+      grid.innerHTML = '';
+      if (users.length === 0) {
+        grid.innerHTML = '<p>No status updates yet.</p>';
+        return;
       }
+      users.forEach(user => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<h2>${user.name}</h2><p class="status-${user.status}">${user.status}</p>`;
+        grid.appendChild(div);
+      });
     }
 
-    document.getElementById('status-form').addEventListener('submit', async (e) => {
+    document.getElementById('statusForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const status = document.getElementById('status').value;
-
-      if (!name || !status) return;
-
-      try {
-        const response = await fetch(`${apiBase}/api/update`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, status })
-        });
-
-        if (response.ok) {
-          await loadStatuses(); // Refresh the list
-        } else {
-          alert('Failed to update status');
-        }
-      } catch (err) {
-        console.error('Submission failed', err);
-      }
+      const formData = new FormData(e.target);
+      await fetch('https://status-board-app.antonanalt.workers.dev/api/update', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: formData.get('name'),
+          status: formData.get('status')
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      e.target.reset();
+      loadStatuses();
     });
 
-    // Load statuses on page load
     loadStatuses();
   </script>
 </body>
 </html>
+
