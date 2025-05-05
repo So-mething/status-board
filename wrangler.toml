@@ -1,5 +1,6 @@
 name = "status-board-app"
 type = "javascript"
+main = "index.js"
 
 compatibility_date = "2025-05-04"
 account_id = "e5c6bac95ecab37b132d271e5279dea6" 
