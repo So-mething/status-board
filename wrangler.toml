@@ -1,6 +1,6 @@
 name = "status-board-app"
 type = "javascript"
-main = "worker/index.js"
+main = "index.js"
 
 
 account_id = "e5c6bac95ecab37b132d271e5279dea6" 
@@ -13,4 +13,4 @@ database_id = "965e59c8-e906-486c-8857-feafa56259e8"
 
 [[site]]
 bucket = "."
-entry-point = "worker"
+
