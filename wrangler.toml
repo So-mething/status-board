@@ -12,4 +12,4 @@ id = "965e59c8-e906-486c-8857-feafa56259e8"
 
 
 [site]
-  bucket = "public"
+  bucket = "."
