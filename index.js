@@ -19,7 +19,7 @@ export default {
     }
 
     // Serve static HTML fallback
-    const html = await fetch("https://your-static-hosting-url/index.html");
+    const html = await fetch("https://status-board-7t5.pages.dev/index.html");
     return new Response(await html.text(), { headers: { "Content-Type": "text/html" } });
   },
 };
