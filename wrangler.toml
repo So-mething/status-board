@@ -1,15 +1,13 @@
 name = "status-board-app"
-type = "javascript"
 main = "index.js"
-
 compatibility_date = "2025-05-04"
+
 account_id = "e5c6bac95ecab37b132d271e5279dea6" 
 
 [[d1_databases]]
 binding = "DB"
 database_name = "status-board-db"
-id = "965e59c8-e906-486c-8857-feafa56259e8"
-
+database_id = "965e59c8-e906-486c-8857-feafa56259e8"
 
 [site]
   bucket = "."
