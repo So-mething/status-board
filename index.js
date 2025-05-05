@@ -58,7 +58,7 @@ export default {
     }
 
     if (pathname === "/api/status") {
-      const result = await env.DB.prepare("SELECT id, name, status FROM users WHERE date = CURRENT_DATE").all();
+      const result = await env.DB.prepare('SELECT id, name, status FROM users').all();
       return new Response(JSON.stringify(result.results), { headers: corsHeaders });
     }
 
