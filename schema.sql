@@ -1,7 +1,6 @@
-CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE users (
   name TEXT NOT NULL,
-  status TEXT CHECK(status IN ('online', 'offline', 'busy')) NOT NULL,
-  date DATE NOT NULL DEFAULT CURRENT_DATE,
-  UNIQUE(name, date)
+  status TEXT NOT NULL,
+  date TEXT NOT NULL,
+  PRIMARY KEY (name, date)
 );
