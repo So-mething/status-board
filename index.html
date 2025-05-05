@@ -52,8 +52,7 @@
         body: JSON.stringify({
           name: formData.get('name'),
           status: formData.get('status')
-        }),
-        headers: { 'Content-Type': 'application/json' }
+        })
       });
       e.target.reset();
       loadStatuses();
@@ -63,4 +62,3 @@
   </script>
 </body>
 </html>
-
