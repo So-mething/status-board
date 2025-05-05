@@ -17,7 +17,7 @@
   <h1>Status Board</h1>
   <div id="statusGrid" class="grid"></div>
   <script>
-    fetch('/api/status')
+    fetch('https://status-board-app.antonanalt.workers.dev/api/status')
       .then(res => res.json())
       .then(users => {
         const grid = document.getElementById('statusGrid');
