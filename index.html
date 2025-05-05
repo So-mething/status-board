@@ -16,6 +16,7 @@
 </head>
 <body>
   <h1>Status Board</h1>
+  
   <form id="statusForm">
     <input type="text" name="name" placeholder="Your name" required />
     <select name="status">
@@ -25,17 +26,23 @@
     </select>
     <button type="submit">Update Status</button>
   </form>
+
   <div id="statusGrid" class="grid"></div>
+
   <script>
+    // Load current status updates from the API
     async function loadStatuses() {
       const res = await fetch('https://status-board-app.antonanalt.workers.dev/api/status');
       const users = await res.json();
       const grid = document.getElementById('statusGrid');
       grid.innerHTML = '';
+
       if (users.length === 0) {
         grid.innerHTML = '<p>No status updates yet.</p>';
         return;
       }
+
+      // Create a card for each user status
       users.forEach(user => {
         const div = document.createElement('div');
         div.className = 'card';
@@ -44,6 +51,7 @@
       });
     }
 
+    // Handle form submission and update status
     document.getElementById('statusForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
@@ -52,7 +60,10 @@
         body: JSON.stringify({
           name: formData.get('name'),
           status: formData.get('status')
-        })
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
       e.target.reset();
       loadStatuses();
