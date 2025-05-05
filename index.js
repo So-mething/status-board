@@ -41,24 +41,4 @@ export default {
  
      return new Response('Not Found', { status: 404 });
    }
- }; (Cloudflare Worker with D1 and CORS)
- export default {
-   async fetch(request, env) {
-     const url = new URL(request.url);
-     const pathname = url.pathname;
-     const corsHeaders = {
-       'Content-Type': 'application/json',
-       'Access-Control-Allow-Origin': '*',
-       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-       'Access-Control-Allow-Headers': 'Content-Type'
-     };
- 
-     if (request.method === 'OPTIONS') {
-       return new Response(null, { headers: corsHeaders });
-     }
- 
-     if (pathname === "/api/status") {
-       const result = await env.DB.prepare("SELECT id, name, status FROM users WHERE date = CURRENT_DATE").all();
-       const result = await env.DB.prepare('SELECT id, name, status FROM users').all();
-       return new Response(JSON.stringify(result.results), { headers: corsHeaders });
-     }
+ }; 
