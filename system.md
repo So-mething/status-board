@@ -1,8 +1,8 @@
 ## Problem
-Remote teams struggle to know who is currently available, online, or busy. Traditional tools are often overkill or require manual updates.
+Remote teams struggle to know who is currently available, online, or busy.
 
 ## Solution
-A minimal web-based status board that shows the current availability of team members for the day.
+A minimal web-based status board that shows the who is currently available in the day.
 
 ## How it Works
 - A static HTML frontend fetches status data from a Cloudflare Worker API.
